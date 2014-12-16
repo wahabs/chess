@@ -4,8 +4,6 @@ require 'byebug'
 
 class SlidingPiece < Piece
 
-
-
   def moves(deltas)
     potentials = []
     deltas.each do |delta|
