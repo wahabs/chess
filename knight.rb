@@ -17,10 +17,3 @@ class Knight < SteppingPiece
   end
 
 end
-
-# b = Board.new
-# q = Knight.new("b", b, [3,3])
-# q2 = Knight.new("b", b, [5,4])
-# b[[3,3]] = q
-# b[[5,4]] = q2
-# p q.moves

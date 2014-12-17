@@ -21,12 +21,3 @@ class SlidingPiece < Piece
   end
 
 end
-
-
-# Loop until we get to edge
-  # if there's a piece in the way
-   # check if we can take
-    # if yes, add to potentials
-    # if no, stop exploring that way
-  # else there's no piece, add to potentials
-# end

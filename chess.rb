@@ -1,15 +1,17 @@
 require_relative 'board'
 
-
-
 class Chess
 
   class WrongColorError < ArgumentError
   end
 
-  def initialize
+  def self.human_v_human
+    Chess.new(b: HumanPlayer.new(:b), w: HumanPlayer.new(:w))
+  end
+
+  def initialize(players)
     @board = Board.new
-    @players = { b: HumanPlayer.new(:b), w: HumanPlayer.new(:w) }
+    @players = players
   end
 
   def toggle_color(color)
@@ -79,5 +81,5 @@ class HumanPlayer
   end
 end
 
-c = Chess.new
+c = Chess.human_v_human
 c.play

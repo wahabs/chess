@@ -78,13 +78,13 @@ class Board
       end
       puts ""
     end
-    puts "  a b c d e f g h"
+    puts "  a b c d e f g h \n\n"
 
   end
 
   def in_check?(color)
     king_location = nil
-    @grid.flatten.each do |piece|
+    all_pieces.each do |piece|
       if piece.is_a?(King) && piece.color == color
         king_location = piece.position
         break
@@ -104,27 +104,12 @@ class Board
 
   def move(start_loc, end_loc)
     piece = self[start_loc]
-
-    if piece.nil?
-      no_piece = "There's no piece at #{start_loc}"
-      raise NoPieceError.new
-    end
-
-    if !piece.moves.include?(end_loc)
-      invalid_move = "You can't move the #{piece.class} to #{end_loc} \n"\
-      "Valid moves are #{piece.moves}"
-      raise InvalidMoveError.new invalid_move
-    end
-
-    if !piece.safe_moves(piece.moves).include?(end_loc)
-      raise InCheckError.new "That move would put you into check"
-    end
-
-
+    raise NoPieceError.new if piece.nil?
+    raise InvalidMoveError.new if !piece.moves.include?(end_loc)
+    raise InCheckError.new if !piece.safe_moves(piece.moves).include?(end_loc)
     self[end_loc] = piece
     self[end_loc].position = end_loc
     self[start_loc] = nil
-
     display_board
   end
 
@@ -153,29 +138,3 @@ class Board
   end
 
 end
-
-
-
-
-# b = Board.new
-#
-# b.display_board
-#
-# b.move([4,1], [4,2])
-# b.move([6,6], [6,4])
-# b.move([5,6], [5,5])
-# b.move([3,0], [7,4])
-#
-# p b.checkmate?(:w)
-
-
-# p b.in_check?(:w)
-# p b.in_check?(:b)
-
-
-
-# q = Pawn.new(:w, b, [3,3])
-# q2 = Pawn.new(:b, b, [4,4])
-# b[[3,3]] = q
-# b[[4,4]] = q2
-# p q.moves

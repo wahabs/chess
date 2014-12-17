@@ -16,11 +16,6 @@ class Piece
                           [0, -1]]
   end
 
-  # 
-  # def diagonal_deltas
-  #   @_diagonal_deltas ||= [-1, 1].repeated_permutation(2).to_a
-  # end
-
   def displace(position, delta)
     [position[0] + delta[0], position[1] + delta[1]]
   end

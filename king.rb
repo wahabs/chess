@@ -7,15 +7,7 @@ class King < SteppingPiece
   end
 
   def to_s
-    (self.color == :b) ? :♚ : :♔ 
+    (self.color == :b) ? :♚ : :♔
   end
 
 end
-
-
-# b = Board.new
-# q = King.new("b", b, [3,3])
-# q2 = King.new("b", b, [4,3])
-# b[[3,3]] = q
-# b[[4,3]] = q2
-# p q.moves
