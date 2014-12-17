@@ -7,4 +7,8 @@ class Bishop < SlidingPiece
     super
   end
 
+  def to_s
+    (self.color == :b) ? :♝ : :♗
+  end
+
 end

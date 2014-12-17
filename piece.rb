@@ -1,4 +1,4 @@
-require_relative 'board'
+# require_relative 'board'
 require 'byebug'
 
 class Piece
@@ -14,11 +14,6 @@ class Piece
                           [-1, 0],
                           [0, 1],
                           [0, -1]]
-  end
-
-
-
-  def moves(deltas)
   end
 
   def displace(position, delta)

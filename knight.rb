@@ -12,6 +12,10 @@ class Knight < SteppingPiece
     super
   end
 
+  def to_s
+    (self.color == :b) ? :♞ : :♘
+  end
+
 end
 
 # b = Board.new

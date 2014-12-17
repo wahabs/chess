@@ -5,6 +5,11 @@ class Rook < SlidingPiece
   def moves(deltas = orthogonal_deltas)
     super
   end
+
+  def to_s
+    (self.color == :b) ? :♜ : :♖
+  end
+
 end
 
 # b = Board.new

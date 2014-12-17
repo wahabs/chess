@@ -6,6 +6,9 @@ class King < SteppingPiece
     super
   end
 
+  def to_s
+    (self.color == :b) ? :♚ : :♔ 
+  end
 
 end
 
