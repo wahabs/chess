@@ -7,8 +7,7 @@ class Pawn < Piece
     @start_position = position
   end
 
-  def moves
-    potentials = []
+  def deltas
     deltas = []
 
     if color == :w
@@ -16,13 +15,18 @@ class Pawn < Piece
     else
       deltas += [[0, -1], [-1, -1], [1, -1]]
     end
+  end
 
+# refactor into a few methods
+  def moves
+    potentials = []
 
     deltas.each do |delta|
       move = displace(position, delta)
       next unless @board.move_on_board?(move)
       if delta[0] == 0
         next if @board.location_occupied?(move)
+
         if position = @start_position
           double_move = displace(move, delta)
           potentials << double_move unless @board.location_occupied?(double_move)

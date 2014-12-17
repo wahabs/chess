@@ -3,7 +3,7 @@ require 'byebug'
 
 class Piece
 
-  attr_reader :color, :position, :board, :diagonal_deltas, :orthogonal_deltas
+  attr_accessor :color, :position, :board, :diagonal_deltas, :orthogonal_deltas
 
   def initialize(color, board, position)
     @color = color
@@ -16,6 +16,11 @@ class Piece
                           [0, -1]]
   end
 
+  # 
+  # def diagonal_deltas
+  #   @_diagonal_deltas ||= [-1, 1].repeated_permutation(2).to_a
+  # end
+
   def displace(position, delta)
     [position[0] + delta[0], position[1] + delta[1]]
   end
@@ -25,4 +30,13 @@ class Piece
     @board[position].color != color
   end
 
+  def move_into_check?(next_move)
+    board_dup = board.dup
+    board_dup.move!(self.position, next_move)
+    board_dup.in_check?(color)
+  end
+
+  def safe_moves(potentials)
+    potentials.reject { |move| move_into_check?(move) }
+  end
 end
