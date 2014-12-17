@@ -8,12 +8,10 @@ class Pawn < Piece
   end
 
   def deltas
-    deltas = []
-
     if color == :w
-      deltas += [[0, 1], [-1, 1], [1, 1]]
+      [[0, 1], [-1, 1], [1, 1]]
     else
-      deltas += [[0, -1], [-1, -1], [1, -1]]
+      [[0, -1], [-1, -1], [1, -1]]
     end
   end
 
