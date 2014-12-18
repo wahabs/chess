@@ -1,5 +1,6 @@
 require 'byebug'
 require_relative 'chess_set'
+require 'colorize'
 
 class NoPieceError < ArgumentError
 end
@@ -63,6 +64,7 @@ class Board
     end
   end
 
+
   def display_board
     print "  "
 
@@ -70,10 +72,16 @@ class Board
     @grid.transpose.each_with_index do |row, r|
       print "#{r} "
       row.each_with_index do |piece, c|
-        if piece
-          print "#{piece.to_s} "
+        if (r + c).even?
+          background = {:background => :blue}
         else
-          print "#{((r+c).even?) ? "□" : "■"} "
+          background = {:background => :black}
+        end
+
+        if piece
+          print "#{piece.to_s} ".colorize(background)
+        else
+          print "  ".colorize(background)
         end
       end
       puts ""
