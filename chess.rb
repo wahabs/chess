@@ -1,4 +1,5 @@
 require_relative 'board'
+require_relative 'player'
 
 class Chess
 
@@ -9,9 +10,16 @@ class Chess
     Chess.new(b: HumanPlayer.new(:b), w: HumanPlayer.new(:w))
   end
 
+  def self.comp_v_comp
+    Chess.new(b: ComputerPlayer.new(:b), w: ComputerPlayer.new(:w))
+  end
+
   def initialize(players)
     @board = Board.new
     @players = players
+    players.each do |color, player|
+       player.board = @board if player.is_a?(ComputerPlayer)
+    end
   end
 
   def toggle_color(color)
@@ -54,32 +62,3 @@ class Chess
     puts "Checkmate. #{(color == :w) ? "Black" : "White"} wins!"
   end
 end
-
-class HumanPlayer
-  attr_accessor :color
-
-  def initialize(color)
-    @color = color
-  end
-
-  def play_turn
-    puts "#{(color == :w) ? "White" : "Black"}, please enter start and end coordinates."
-    columns = {
-      "a" => 0,
-      "b" => 1,
-      "c" => 2,
-      "d" => 3,
-      "e" => 4,
-      "f" => 5,
-      "g" => 6,
-      "h" => 7
-    }
-    locations = gets.chomp.split(" ")
-    locations.map do |pos|
-      [columns[pos[0]], pos[1].to_i]
-    end
-  end
-end
-
-c = Chess.human_v_human
-c.play

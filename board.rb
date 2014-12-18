@@ -103,12 +103,17 @@ class Board
   end
 
   def checkmate?(color)
+    return false unless in_check?(color)
     color_pieces = all_pieces.select { |piece| piece.color == color }
     color_pieces.each do |piece|
       return false if piece.safe_moves(piece.moves).length > 0
     end
     true
   end
+
+  # def draw?(color)
+  #   checkmate? && !in_check?
+  # end
 
   def move(start_loc, end_loc)
     piece = self[start_loc]
