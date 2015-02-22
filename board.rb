@@ -1,4 +1,3 @@
-require 'byebug'
 require_relative 'chess_set'
 require 'colorize'
 
@@ -20,7 +19,6 @@ class Board
   end
 
   def [](pos)
-  #  byebug
     x, y = pos
     @grid[x][y]
   end

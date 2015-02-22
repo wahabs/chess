@@ -10,8 +10,12 @@ end
 
 class HumanPlayer < Player
 
+  def is_human?
+    true
+  end
+
   def play_turn
-    puts "#{(color == :w) ? "White" : "Black"}, please enter start and end coordinates."
+    puts "#{(color == :w) ? "White" : "Black"}, please enter start and end coordinates, e.g. a6 a5"
     columns = {
       "a" => 0,
       "b" => 1,
@@ -40,8 +44,11 @@ class ComputerPlayer < Player
     @board = board
   end
 
+  def is_human?
+    false
+  end
+
   def play_turn
-    gets
     play_random
   end
 

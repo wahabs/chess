@@ -7,19 +7,27 @@ class Chess
   end
 
   def self.human_v_human
-    Chess.new(b: HumanPlayer.new(:b), w: HumanPlayer.new(:w))
+    Chess.new(b: HumanPlayer.new(:b), w: HumanPlayer.new(:w)).play
   end
 
   def self.comp_v_comp
-    Chess.new(b: ComputerPlayer.new(:b), w: ComputerPlayer.new(:w))
+    Chess.new(b: ComputerPlayer.new(:b), w: ComputerPlayer.new(:w)).play
+  end
+
+  def self.human_v_comp
+    Chess.new(b: HumanPlayer.new(:b), w: ComputerPlayer.new(:w)).play
   end
 
   def initialize(players)
     @board = Board.new
     @players = players
     players.each do |color, player|
-       player.board = @board if player.is_a?(ComputerPlayer)
+       player.board = @board unless player.is_human?
     end
+  end
+
+  def human_playing?
+    @players[:b].is_human? || @players[:w].is_human?
   end
 
   def toggle_color(color)
@@ -32,31 +40,37 @@ class Chess
 
   def play
 
-    puts "Welcome to Chess."
+    puts "Welcome to Chess. NOTE: Depending on your console configuration, colors may be inverted."
 
     @board.display_board
     color = :w
 
     until @board.checkmate?(color)
       begin
-        start_loc, end_loc = @players[color].play_turn
+        player = @players[color]
+        start_loc, end_loc = player.play_turn
         raise WrongColorError unless color_valid?(start_loc, color)
         @board.move(start_loc, end_loc)
       rescue NoPieceError
-        puts "There's no piece at there to move"
+        puts "There's no piece at there to move" if player.is_human?
         retry
       rescue InCheckError
-        puts "That move would put you into check"
+        puts "That move would put you into check" if player.is_human?
         retry
       rescue InvalidMoveError
-        puts "The piece can't move there"
+        puts "The piece can't move there" if player.is_human?
         retry
       rescue WrongColorError
-        puts "That piece isn't yours!"
+        puts "That piece isn't yours!" if player.is_human?
+        retry
+      rescue IndexError
+        puts "Invalid move." if player.is_human?
         retry
       end
 
+      sleep(0.5)
       color = toggle_color(color)
+      system("clear") if player.is_human? || !human_playing?
     end
 
     puts "Checkmate. #{(color == :w) ? "Black" : "White"} wins!"
